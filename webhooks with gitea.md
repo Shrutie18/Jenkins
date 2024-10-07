@@ -94,10 +94,84 @@ Step 2 — Copy the following content into the service file:
      WantedBy=multi-user.target
 Step 3 — Enable the service and start Gitea at system boot:
 
+![image](https://github.com/user-attachments/assets/4aa13856-4b35-41ec-b578-fcf196a34c57)
+
 systemctl enable gitea.service
 systemctl start gitea.service
 
 Step 4 — In a web browser go to http://your_instance_ip:3000 to access the Gitea application
+
+Step 4 — In a web browser go to http://your_instance_ip:3000 to access the Gitea application
+
+
+![image](https://github.com/user-attachments/assets/d276c155-3448-4524-9c02-9e4d8b51ca1d)
+![image](https://github.com/user-attachments/assets/c85a657f-845d-455b-bde0-cd3fd669d3b7)
+
+click on install gitea
+
+
+password for gitea --> gitea.
+
+![image](https://github.com/user-attachments/assets/7852b1cb-924f-428d-a3bd-a5f065503e05)
+register for gitea
+
+![image](https://github.com/user-attachments/assets/8f973d27-d9bf-4bb7-9004-becc3e96e909)
+
+
+
+3)connect the instance of jenkins and install jenkins in it with java dependency.
+![image](https://github.com/user-attachments/assets/e61fe633-980b-4873-97ff-fc57342e42f0)
+![image](https://github.com/user-attachments/assets/cea10bc2-d84b-4609-8e5a-c06494813ca1)
+4) go to dashboard ----> manage jenkins
+  manage plugins---> available plugins -->intsall gitea .
+
+
+5) create an repo  in gitea . enter in that repo then go to the settings ----> add webhooks.--> select Gitea.
+   
+![image](https://github.com/user-attachments/assets/719a8247-8d4b-4c4a-a7a4-1360b8623bbd)
+
+6)add the target URL as --->http://65.1.168.38:8080/gitea-webhook/post (<the ip of  jenkins instance>:8080/gitea-webhook/post
+HTTP method --->POST .
+POST CONTENT TYPE --->application/json.
+
+then ,you make click on test delivery to check whether webhooks has been created or not.
+![image](https://github.com/user-attachments/assets/01a2378b-3b38-48ae-a799-9e0bdcda163f)
+
+7)inside the gitea repo create or upload new file 
+  add the following script in it 
+
+  pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building  the jenkinsfile.'
+                // Add your build commands here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add your test commands here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add your deployment commands here
+            }
+        }
+    }
+}
+
+
+
+
+8)go to the jenkins dashboard click on build now .
+![image](https://github.com/user-attachments/assets/028a3379-ae33-4d9f-98ac-374e822af526)
+
+
+
 
 
 
