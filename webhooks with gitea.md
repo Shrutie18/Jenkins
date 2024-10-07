@@ -37,14 +37,19 @@ in nano editor ctr+O --> ctrl+C -->ctrl+X----> save modified buffer yes +enter
 
 2)steps to install Gitea :-----
 
-Installing Gitea
+Installing Gitea--->
 Step 1 — Update the APT package cache, upgrade the already installed software and install Git:
+
 sudo apt update && sudo apt upgrade -y && sudo apt install git -y
 Step 2 — Download the Gitea Binary and make it executable:
+
+
 wget -O gitea https://dl.gitea.com/gitea/1.21/gitea-1.21-linux-amd64
 chmod +x gitea
 Step 3 — Add the user that will run the Gitea application:
+
 sudo adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git git
+
 Step 4 — Create the folder structure that is used by Gitea to store data:
 sudo mkdir -p /var/lib/gitea/custom
 sudo mkdir -p /var/lib/gitea/data
@@ -54,35 +59,42 @@ sudo chmod -R 750 /var/lib/gitea/
 sudo mkdir /etc/gitea
 sudo chown root:git /etc/gitea
 sudo chmod 770 /etc/gitea
+
 Step 5 — Set the working directory of Gitea:
 export GITEA_WORK_DIR=/var/lib/gitea/
+
 Step 6 — Copy the Gitea binary file to /usr/local/bin to make it available system-wide:
 sudo cp gitea /usr/local/bin/gitea
+
 Run Gitea as service
 Step 1 — Create a systemd service for Gitea
-sudo nano /etc/systemd/system/gitea.service
+
+      sudo nano /etc/systemd/system/gitea.service
+
 Step 2 — Copy the following content into the service file:
 [Unit]
-Description=Gitea (Git with a cup of tea)
-After=syslog.target
-After=network.target
+    Description=Gitea (Git with a cup of tea)
+       After=syslog.target 
+        After=network.target
 
 [Service]
 
-RestartSec=2s
-Type=simple
-User=git
-Group=git
-WorkingDirectory=/var/lib/gitea/
-ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
-Restart=always
-Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
+    RestartSec=2s
+    Type=simple
+    User=git
+    Group=git
+     WorkingDirectory=/var/lib/gitea/
+    ExecStart=/usr/local/bin/gitea web -c /etc/gitea/app.ini
+     Restart=always
+     Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
 
 [Install]
-WantedBy=multi-user.target
+     WantedBy=multi-user.target
 Step 3 — Enable the service and start Gitea at system boot:
+
 systemctl enable gitea.service
 systemctl start gitea.service
+
 Step 4 — In a web browser go to http://your_instance_ip:3000 to access the Gitea application
 
 
