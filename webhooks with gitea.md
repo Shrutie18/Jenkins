@@ -49,6 +49,8 @@ chmod +x gitea
 Step 3 — Add the user that will run the Gitea application:
 
 sudo adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git git
+  
+
 
 Step 4 — Create the folder structure that is used by Gitea to store data:
 sudo mkdir -p /var/lib/gitea/custom
