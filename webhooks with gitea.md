@@ -27,32 +27,45 @@ host  all  all 0.0.0.0/0 scram-sha-256
 
 to allow the connection from outside pgAdmin , Add or edit the following line in your postgresql.conf :
 
+```
 listen_addresses = '*'
+```
+
 Restart the service
 
 service postgresql restart (try to use nano editor rather than vim editor ) and comment off the listen address .
 ![image](https://github.com/user-attachments/assets/4eaa93e7-7e8c-4a94-909d-e37a04667e33)
 
-in nano editor ctr+O --> ctrl+C -->ctrl+X----> save modified buffer yes +enter 
+
+-> in nano editor ctr+O --> ctrl+C -->ctrl+X----> save modified buffer yes +enter 
 
 2)steps to install Gitea :-----
 
 Installing Gitea--->
 Step 1 — Update the APT package cache, upgrade the already installed software and install Git:
 
+```
 sudo apt update && sudo apt upgrade -y && sudo apt install git -y
+```
+
 Step 2 — Download the Gitea Binary and make it executable:
 
-
+```
 wget -O gitea https://dl.gitea.com/gitea/1.21/gitea-1.21-linux-amd64
 chmod +x gitea
+```
 Step 3 — Add the user that will run the Gitea application:
 
+```
 sudo adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git git
+```
+![alt text](image.png)
   
 
 
 Step 4 — Create the folder structure that is used by Gitea to store data:
+
+```
 sudo mkdir -p /var/lib/gitea/custom
 sudo mkdir -p /var/lib/gitea/data
 sudo mkdir -p /var/lib/gitea/log
@@ -61,19 +74,30 @@ sudo chmod -R 750 /var/lib/gitea/
 sudo mkdir /etc/gitea
 sudo chown root:git /etc/gitea
 sudo chmod 770 /etc/gitea
+```
 
 Step 5 — Set the working directory of Gitea:
+
+```
 export GITEA_WORK_DIR=/var/lib/gitea/
+```
 
 Step 6 — Copy the Gitea binary file to /usr/local/bin to make it available system-wide:
+
+```
 sudo cp gitea /usr/local/bin/gitea
+```
 
 Run Gitea as service
 Step 1 — Create a systemd service for Gitea
 
-      sudo nano /etc/systemd/system/gitea.service
+```
+sudo vim /etc/systemd/system/gitea.service
+```
 
 Step 2 — Copy the following content into the service file:
+
+```
 [Unit]
     Description=Gitea (Git with a cup of tea)
        After=syslog.target 
@@ -92,14 +116,15 @@ Step 2 — Copy the following content into the service file:
 
 [Install]
      WantedBy=multi-user.target
+```
 Step 3 — Enable the service and start Gitea at system boot:
 
 ![image](https://github.com/user-attachments/assets/4aa13856-4b35-41ec-b578-fcf196a34c57)
 
-systemctl enable gitea.service
-systemctl start gitea.service
-
-Step 4 — In a web browser go to http://your_instance_ip:3000 to access the Gitea application
+```
+sudo systemctl enable gitea.service
+sudo systemctl start gitea.service
+```
 
 Step 4 — In a web browser go to http://your_instance_ip:3000 to access the Gitea application
 
@@ -120,8 +145,11 @@ register for gitea
 
 
 3)connect the instance of jenkins and install jenkins in it with java dependency.
+
 ![image](https://github.com/user-attachments/assets/e61fe633-980b-4873-97ff-fc57342e42f0)
+
 ![image](https://github.com/user-attachments/assets/cea10bc2-d84b-4609-8e5a-c06494813ca1)
+
 4) go to dashboard ----> manage jenkins
   manage plugins---> available plugins -->intsall gitea .
 
@@ -130,7 +158,13 @@ register for gitea
    
 ![image](https://github.com/user-attachments/assets/719a8247-8d4b-4c4a-a7a4-1360b8623bbd)
 
-6)add the target URL as --->http://65.1.168.38:8080/gitea-webhook/post (<the ip of  jenkins instance>:8080/gitea-webhook/post
+6)add the target URL as --->
+```
+http://65.1.168.38:8080/gitea-webhook/post 
+```
+
+(<the ip of  jenkins instance>:8080/gitea-webhook/post
+
 HTTP method --->POST .
 POST CONTENT TYPE --->application/json.
 
@@ -140,6 +174,7 @@ then ,you make click on test delivery to check whether webhooks has been created
 7)inside the gitea repo create or upload new file 
   add the following script in it 
 
+```
   pipeline {
     agent any
     stages {
@@ -163,21 +198,28 @@ then ,you make click on test delivery to check whether webhooks has been created
         }
     }
 }
+```
 
 8)![image](https://github.com/user-attachments/assets/867d875d-a104-4ae2-9637-dcc06209d036)
 
 ![image](https://github.com/user-attachments/assets/2f5b2cd9-367c-47f7-a00b-fb9c4adde758)
 
 ![image](https://github.com/user-attachments/assets/1f59220c-d0c3-4364-ad1c-13dc600eb1bd)
+
 ![image](https://github.com/user-attachments/assets/ec2f4a07-b3a4-43fb-8e59-8d4641f52364)
-![image](https://github.com/user-attachments/assets/46fcfc02-f016-48a8-
+
 ![image](https://github.com/user-attachments/assets/c49f1445-0caf-4bc9-ac40-783dbf016d77)
+
 ![image](https://github.com/user-attachments/assets/a2ca9639-6ff6-46a3-a154-3fafb7bd8785)
+
 ![image](https://github.com/user-attachments/assets/ed3a310c-bfee-4895-a58b-5db6a5491327)
 
 then save the changes
+
 ![image](https://github.com/user-attachments/assets/41e9a407-c165-47e4-9d92-450b3e956e10)
+
 ![image](https://github.com/user-attachments/assets/e23d346f-0323-4b52-9483-d1614b5c62aa)
+
 ![image](https://github.com/user-attachments/assets/a71fcb91-29aa-4fed-ba76-4c76f6334d73)
 
 
