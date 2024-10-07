@@ -164,11 +164,37 @@ then ,you make click on test delivery to check whether webhooks has been created
     }
 }
 
+8)![image](https://github.com/user-attachments/assets/867d875d-a104-4ae2-9637-dcc06209d036)
+
+![image](https://github.com/user-attachments/assets/2f5b2cd9-367c-47f7-a00b-fb9c4adde758)
+
+![image](https://github.com/user-attachments/assets/1f59220c-d0c3-4364-ad1c-13dc600eb1bd)
+![image](https://github.com/user-attachments/assets/ec2f4a07-b3a4-43fb-8e59-8d4641f52364)
+![image](https://github.com/user-attachments/assets/46fcfc02-f016-48a8-
+![image](https://github.com/user-attachments/assets/c49f1445-0caf-4bc9-ac40-783dbf016d77)
+![image](https://github.com/user-attachments/assets/a2ca9639-6ff6-46a3-a154-3fafb7bd8785)
+![image](https://github.com/user-attachments/assets/ed3a310c-bfee-4895-a58b-5db6a5491327)
+
+then save the changes
+![image](https://github.com/user-attachments/assets/41e9a407-c165-47e4-9d92-450b3e956e10)
+![image](https://github.com/user-attachments/assets/e23d346f-0323-4b52-9483-d1614b5c62aa)
+![image](https://github.com/user-attachments/assets/a71fcb91-29aa-4fed-ba76-4c76f6334d73)
+
+
+
+
+
+
+
+
+
 
 
 
 8)go to the jenkins dashboard click on build now .
 ![image](https://github.com/user-attachments/assets/028a3379-ae33-4d9f-98ac-374e822af526)
+
+![image](https://github.com/user-attachments/assets/831104f0-5fc4-4f15-b2fb-b0bf4a62cb99)
 
 
 
