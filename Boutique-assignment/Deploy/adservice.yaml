@@ -1,54 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adservice
+  name: cartservice
 spec:
+  replicas: 3 # Add replicas to define the number of pod instances
   selector:
     matchLabels:
-      app: adservice
+      app: cartservice
   template:
     metadata:
       labels:
-        app: adservice
+        app: cartservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: default # Consider using a custom service account
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/adservice:v0.3.1
-        imagePullPolicy: Always
+        image: gcr.io/google-samples/microservices-demo/cartservice:v0.3.1
         ports:
-        - containerPort: 9555
+        - containerPort: 7070
         env:
-        - name: PORT
-          value: "9555"
+        - name: REDIS_ADDR
+          value: "redis-cart:6379"
         resources:
           requests:
             cpu: 200m
-            memory: 180Mi
+            memory: 64Mi
           limits:
             cpu: 300m
-            memory: 300Mi
-        #readinessProbe:
-          #initialDelaySeconds: 20
-          #periodSeconds: 15
-          #exec:
-            #command: ["/bin/grpc_health_probe", "-addr=:9555"]
-        #livenessProbe:
-          #initialDelaySeconds: 20
-          #periodSeconds: 15
-          #exec:
-            #command: ["/bin/grpc_health_probe", "-addr=:9555"]
+            memory: 128Mi
+        readinessProbe: 
+          initialDelaySeconds: 15
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
+        livenessProbe: 
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice
+  name: cartservice
 spec:
   type: ClusterIP
   selector:
-    app: adservice
+    app: cartservice
   ports:
   - name: grpc
-    port: 9555
-    targetPort: 9555
+    port: 7070
+    targetPort: 7070
