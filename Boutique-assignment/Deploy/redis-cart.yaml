@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: redis-cart
 spec:
+  replicas: 1  # Specify the number of replicas for the deployment
   selector:
     matchLabels:
       app: redis-cart
@@ -11,34 +12,36 @@ spec:
       labels:
         app: redis-cart
     spec:
+      # Uncomment the nodeSelector if needed
       # nodeSelector:
       #   kubernetes.io/hostname: qa-cluster-control-plane
       containers:
-      - name: redis
-        image:  redis:alpine
-        ports:
-        - containerPort: 6379
-        # readinessProbe:
-        #   periodSeconds: 5
-        #   tcpSocket:
-        #     port: 6379
-        # livenessProbe:
-        #   periodSeconds: 5
-        #   tcpSocket:
-        #     port: 6379
-        volumeMounts:
-        - mountPath: /data
-          name: redis-data
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "125m"
-          requests:
-            cpu: "70m"
-            memory: "200Mi"
+        - name: redis
+          image: redis:alpine
+          ports:
+            - containerPort: 6379
+          # Uncomment the probes if needed
+          # readinessProbe:
+          #   periodSeconds: 5
+          #   tcpSocket:
+          #     port: 6379
+          # livenessProbe:
+          #   periodSeconds: 5
+          #   tcpSocket:
+          #     port: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: redis-data
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "125m"
+            requests:
+              cpu: "70m"
+              memory: "200Mi"
       volumes:
-      - name: redis-data
-        emptyDir: {}
+        - name: redis-data
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -49,6 +52,6 @@ spec:
   selector:
     app: redis-cart
   ports:
-  - name: redis
-    port: 6379
-    targetPort: 6379
+    - name: redis
+      port: 6379
+      targetPort: 6379
